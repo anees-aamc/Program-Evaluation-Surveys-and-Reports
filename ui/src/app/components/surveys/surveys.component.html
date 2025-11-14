@@ -3,7 +3,7 @@
 
   <ul>
     <li *ngFor="let s of surveys">
-      <a href="/surveys/{{ s.id }}">{{ s.title }} ({{ s.survey_type_cd }}) - {{ s.cal_year }}</a>
+      <a [routerLink]="['/surveys', s.id]">{{ s.title }} ({{ s.survey_type_cd }}) - {{ s.cal_year }}</a>
     </li>
   </ul>
 

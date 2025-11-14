@@ -1,11 +1,13 @@
-import asyncio
+import pytest
 from sqlalchemy import text
 from app.db import engine
 
-async def test_conn():
-    async with engine.begin() as conn:
-        query = "SELECT 1"
-        result = await conn.execute(text(query))
-        print(result.all())
 
-asyncio.run(test_conn())
+@pytest.mark.asyncio
+async def test_conn():
+    """Simple connectivity smoke test - executed by pytest with asyncio support."""
+    async with engine.begin() as conn:
+        result = await conn.execute(text("SELECT 1"))
+        # result may be a ResultProxy; ensure we can fetch rows
+        assert result is not None
+        _ = result.all()

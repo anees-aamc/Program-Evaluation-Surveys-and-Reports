@@ -25,12 +25,39 @@ class Program(BaseSchema):
     end_date: Optional[date] = None
 
 
+class ProgramUpdate(BaseSchema):
+    id: Optional[int] = None
+    cal_year: Optional[int] = None
+    program_code: Optional[str] = None
+    program_name: Optional[str] = None
+    program_description: Optional[str] = None
+    start_date: Optional[date] = None
+    end_date: Optional[date] = None
+
+
 class SurveyType(BaseSchema):
     survey_type_cd: str
     survey_type_desc: Optional[str] = None
 
 
+class SurveyTypeUpdate(BaseSchema):
+    survey_type_cd: Optional[str] = None
+    survey_type_desc: Optional[str] = None
+
+
 class Survey(BaseSchema):
+    id: Optional[int] = None
+    survey_type_cd: Optional[str] = None        # FK → survey_type
+    cal_year: Optional[int] = None
+    program_id: Optional[int] = None            # FK → program
+    program_code: Optional[str] = None
+    title: Optional[str] = None
+    description: Optional[str] = None
+    open_date: Optional[date] = None
+    close_date: Optional[date] = None
+
+
+class SurveyUpdate(BaseSchema):
     id: Optional[int] = None
     survey_type_cd: Optional[str] = None        # FK → survey_type
     cal_year: Optional[int] = None
@@ -52,6 +79,11 @@ class Category(BaseSchema):
     category_desc: Optional[str] = None
 
 
+class CategoryUpdate(BaseSchema):
+    category_cd: Optional[str] = None
+    category_desc: Optional[str] = None
+
+
 class ResponseGroup(BaseSchema):
     group_name: str
     description: Optional[str] = None
@@ -66,11 +98,11 @@ class ResponseValue(BaseSchema):
 class BaseQuestion(BaseSchema):
     db_name: str
     survey_type_cd: Optional[str] = None        # FK → survey_type
-    event_type: Optional[str] = None            # FK → event_type
+    # event_type: Optional[str] = None            # FK → event_type
     category_cd: Optional[str] = None           # FK → category
     question_stem: Optional[str] = None
     question_text: Optional[str] = None
-    group_name: Optional[str] = None            # FK → response_group
+    # group_name: Optional[str] = None            # FK → response_group
     question_type: Optional[str] = None
     conditional: Optional[str] = None
     required: Optional[str] = None

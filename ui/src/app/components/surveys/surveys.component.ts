@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'
+import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from "../../app-routing.module";
 
 interface Survey {
   id?: number;
@@ -16,7 +18,7 @@ interface Survey {
 @Component({
   selector: 'app-surveys',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, AppRoutingModule],
   templateUrl: './surveys.component.html',
 })
 export class SurveysComponent implements OnInit {

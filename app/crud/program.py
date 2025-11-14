@@ -13,7 +13,7 @@ class CRUDProgram(CRUDBase[ProgramModel, Program]):
             select(ProgramModel)
             .filter(ProgramModel.id == id)
             .options(
-                # selectinload(ProgramModel.surveys),
+                selectinload(ProgramModel.surveys),
                 # Uncomment if you implement activities/personnel
                 # selectinload(ProgramModel.activities),
                 # selectinload(ProgramModel.personnel),

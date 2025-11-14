@@ -37,10 +37,10 @@ class Program(Base):
     start_date: Mapped[Optional[date]] = mapped_column(Date)
     end_date: Mapped[Optional[date]] = mapped_column(Date)
 
-    # # Relationships — note names match Survey.program below
-    # surveys: Mapped[List["Survey"]] = relationship(
-    #     "Survey", back_populates="program", lazy="selectin"
-    # )
+    # Relationships — note names match Survey.program below
+    surveys: Mapped[List["Survey"]] = relationship(
+        "Survey", back_populates="program", lazy="selectin"
+    )
 
 
 class SurveyType(Base):
@@ -68,10 +68,10 @@ class Survey(Base):
     open_date: Mapped[Optional[date]] = mapped_column(Date)
     close_date: Mapped[Optional[date]] = mapped_column(Date)
 
-    # # NOTE: back_populates names must match the attribute names on the other class
-    # program: Mapped[Optional["Program"]] = relationship(
-    #     "Program", back_populates="surveys", lazy="selectin"
-    # )
+    # NOTE: back_populates names must match the attribute names on the other class
+    program: Mapped[Optional["Program"]] = relationship(
+        "Program", back_populates="surveys", lazy="selectin"
+    )
     survey_type: Mapped[Optional["SurveyType"]] = relationship(
         "SurveyType", back_populates="surveys", lazy="selectin"
     )
@@ -84,17 +84,17 @@ class Survey(Base):
 #     event_type_desc: Mapped[Optional[str]] = mapped_column(Text)
 #
 #     base_questions: Mapped[List["BaseQuestion"]] = relationship(back_populates="event_type_rel")
-#
-#
-# class Category(Base):
-#     __tablename__ = "category"
-#
-#     category_cd: Mapped[str] = mapped_column(Text, primary_key=True)
-#     category_desc: Mapped[Optional[str]] = mapped_column(Text)
-#
-#     base_questions: Mapped[List["BaseQuestion"]] = relationship(back_populates="category")
-#
-#
+
+
+class Category(Base):
+    __tablename__ = "category"
+
+    category_cd: Mapped[str] = mapped_column(Text, primary_key=True)
+    category_desc: Mapped[Optional[str]] = mapped_column(Text)
+
+    base_questions: Mapped[List["BaseQuestion"]] = relationship(back_populates="category")
+
+
 # class ResponseGroup(Base):
 #     __tablename__ = "response_group"
 #
@@ -113,27 +113,27 @@ class Survey(Base):
 #     value_label: Mapped[Optional[str]] = mapped_column(Text)
 #
 #     group: Mapped["ResponseGroup"] = relationship(back_populates="values")
-#
-#
-# class BaseQuestion(Base):
-#     __tablename__ = "base_question"
-#
-#     db_name: Mapped[str] = mapped_column(Text, primary_key=True)
-#     survey_type_cd: Mapped[Optional[str]] = mapped_column(ForeignKey("survey_type.survey_type_cd"))
-#     event_type: Mapped[Optional[str]] = mapped_column(ForeignKey("event_type.event_type_cd"))
-#     category_cd: Mapped[Optional[str]] = mapped_column(ForeignKey("category.category_cd"))
-#     question_stem: Mapped[Optional[str]] = mapped_column(Text)
-#     question_text: Mapped[Optional[str]] = mapped_column(Text)
-#     group_name: Mapped[Optional[str]] = mapped_column(ForeignKey("response_group.group_name"))
-#     question_type: Mapped[Optional[str]] = mapped_column(Text)
-#     conditional: Mapped[Optional[str]] = mapped_column(Text)
-#     required: Mapped[Optional[str]] = mapped_column(Text)
-#     cme_cpe: Mapped[Optional[str]] = mapped_column(Text)
-#
-#     # Relationships
-#     survey_type: Mapped[Optional["SurveyType"]] = relationship(back_populates="base_questions")
+
+
+class BaseQuestion(Base):
+    __tablename__ = "base_question"
+
+    db_name: Mapped[str] = mapped_column(Text, primary_key=True)
+    # survey_type_cd: Mapped[Optional[str]] = mapped_column(ForeignKey("survey_type.survey_type_cd"))
+    # event_type: Mapped[Optional[str]] = mapped_column(ForeignKey("event_type.event_type_cd"))
+    category_cd: Mapped[Optional[str]] = mapped_column(ForeignKey("category.category_cd"))
+    question_stem: Mapped[Optional[str]] = mapped_column(Text)
+    question_text: Mapped[Optional[str]] = mapped_column(Text)
+    # group_name: Mapped[Optional[str]] = mapped_column(ForeignKey("response_group.group_name"))
+    question_type: Mapped[Optional[str]] = mapped_column(Text)
+    conditional: Mapped[Optional[str]] = mapped_column(Text)
+    required: Mapped[Optional[str]] = mapped_column(Text)
+    cme_cpe: Mapped[Optional[str]] = mapped_column(Text)
+
+    # Relationships
+    survey_type: Mapped[Optional["SurveyType"]] = relationship(back_populates="base_questions")
 #     event_type_rel: Mapped[Optional["EventType"]] = relationship(back_populates="base_questions")
-#     category: Mapped[Optional["Category"]] = relationship(back_populates="base_questions")
+    category: Mapped[Optional["Category"]] = relationship(back_populates="base_questions")
 #     group: Mapped[Optional["ResponseGroup"]] = relationship(back_populates="base_questions")
 #
 #     crosswalks: Mapped[List["QuestionCrosswalk"]] = relationship(back_populates="base_question")
